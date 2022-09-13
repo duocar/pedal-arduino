@@ -1,0 +1,38 @@
+<header>
+    <nav class="navbar navbar-expand-md text-bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand text-white" href="{{ site.url }}">{{ site.title | escape }}</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {%- assign default_paths = site.pages | map: "path" -%}
+                {%- assign page_paths = site.header_pages | default: default_paths -%}
+                {%- for path in page_paths -%}
+                    {%- assign my_page = site.pages | where: "path", path | first -%}
+                    {%- if my_page.title -%}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a>
+                    </li>
+                    {%- endif -%}
+                {%- endfor -%}
+            </ul>
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+    </nav>
+</header>
+{%- if page.title -%}
+<section class="container-fluid bg-light">
+    <nav aria-label="breadcrumb" class="text-white pt-2 pb-1">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{ page.title | escape }}</li>
+        </ol>
+      </nav>
+</section>
+{%- endif -%}
